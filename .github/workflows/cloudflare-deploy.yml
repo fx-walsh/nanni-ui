@@ -39,7 +39,7 @@ jobs:
       - name: Terraform Init
         run: |
           terraform init \
-            -backend-config="endpoint=https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+            -backend-config="endpoints.s3=https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com"
         working-directory: ./terraform
 
       # 2. Select or create an isolated environment workspace state
