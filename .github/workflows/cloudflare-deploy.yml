@@ -45,11 +45,10 @@ jobs:
       # 3. Select or create an isolated environment workspace state
       - name: Select Terraform Workspace
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
-          terraform workspace select ${{ env.ENV_NAME }}
-          # || terraform workspace new ${{ env.ENV_NAME }}
+          terraform workspace select ${{ env.ENV_NAME }} || terraform workspace new ${{ env.ENV_NAME }}
         working-directory: ./terraform
 
       # 4. Inject runtime credentials cleanly for state adjustments during apply
@@ -60,7 +59,7 @@ jobs:
             -var="account_id=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
         working-directory: ./terraform
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_ENDPOINT_URL_S3: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
 
