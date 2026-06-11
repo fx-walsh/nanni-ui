@@ -48,7 +48,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
-          terraform workspace select ${{ env.ENV_NAME }} -or-create=true
+          terraform workspace select ${{ env.ENV_NAME }}
           # || terraform workspace new ${{ env.ENV_NAME }}
         working-directory: ./terraform
 
