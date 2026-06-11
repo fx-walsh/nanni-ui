@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket                      = "nanni-tf-state-bucket"
-    key                         = "landing-page/terraform.tfstate"
+    key                         = "nanni-ui/terraform.tfstate"
     endpoints = {
       s3 = "https://6e4797ab8d86f38cf9fafb24903cfab3.r2.cloudflarestorage.com"
     }
@@ -39,12 +39,12 @@ variable "environment" {
 
 variable "github_repo" {
   type    = string
-  default = "yourusername/nanni-landing-page"
+  default = "fx-walsh/nanni-ui"
 }
 
-resource "cloudflare_pages_project" "nanni_landing" {
+resource "cloudflare_pages_project" "nanni_ui" {
   account_id        = var.account_id
-  name              = "nanni-landing-page-${var.environment}"
+  name              = "nanni-ui-${var.environment}"
   production_branch = var.environment == "prod" ? "master" : "dev"
 
   # Migrated from block to attribute mapping
@@ -60,11 +60,11 @@ resource "cloudflare_pages_project" "nanni_landing" {
   }
 
   # Migrated from block to attribute mapping
-  build_config = {
-    build_command   = ""
-    destination_dir = ""
-    root_dir        = ""
-  }
+  # build_config = {
+  #   build_command   = ""
+  #   destination_dir = ""
+  #   root_dir        = ""
+  # }
 
   # Migrated from block to attribute mapping
   deployment_configs = {
