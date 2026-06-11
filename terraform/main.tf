@@ -9,12 +9,16 @@ terraform {
   backend "s3" {
     bucket                      = "nanni-tf-state-bucket"
     key                         = "landing-page/terraform.tfstate"
-    region                      = "us-east-1" # R2 expects us-east-1 dummy value
-    skip_credentials_validation = true
+    endpoints = {
+      s3 = "https://6e4797ab8d86f38cf9fafb24903cfab3.r2.cloudflarestorage.com"
+    }
+    region                      = "auto"                      # CRITICAL: Cloudflare R2 maps best to "auto"
+    skip_credentials_validation = true                        # Skips AWS-specific STS verification
     skip_region_validation      = true
     skip_requesting_account_id  = true
     skip_metadata_api_check     = true
     skip_s3_checksum            = true
+    use_path_style              = true                        # CRITICAL: Forces path-style endpoint structuring
   }
 }
 
