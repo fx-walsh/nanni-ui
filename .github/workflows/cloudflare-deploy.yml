@@ -39,6 +39,7 @@ jobs:
 
       - name: Terraform Init
         run: |
+          echo $AWS_ENDPOINT_URL_S3
           terraform init
         working-directory: ./terraform
 
