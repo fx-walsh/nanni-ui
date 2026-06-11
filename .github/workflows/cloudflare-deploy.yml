@@ -44,6 +44,9 @@ jobs:
 
       # 3. Select or create an isolated environment workspace state
       - name: Select Terraform Workspace
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
           terraform workspace select ${{ env.ENV_NAME }} -or-create
           # || terraform workspace new ${{ env.ENV_NAME }}
