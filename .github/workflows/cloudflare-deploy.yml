@@ -36,10 +36,11 @@ jobs:
 
       # 2. Hard-inject credentials cleanly during init to bypass setup-terraform limits
       - name: Terraform Init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
         run: |
-          terraform init \
-            -backend-config="access_key=${{ secrets.R2_ACCESS_KEY_ID }}" \
-            -backend-config="secret_key=${{ secrets.R2_SECRET_ACCESS_KEY }}" \
+          terraform init
         working-directory: ./terraform
 
       # 3. Select or create an isolated environment workspace state
