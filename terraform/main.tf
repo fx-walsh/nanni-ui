@@ -43,14 +43,14 @@ variable "github_repo" {
 }
 
 resource "cloudflare_pages_project" "nanni_landing" {
-  account_id = var.account_id
-  # Results in 'nanni-landing-page-dev' or 'nanni-landing-page-prod'
+  account_id        = var.account_id
   name              = "nanni-landing-page-${var.environment}"
   production_branch = var.environment == "prod" ? "master" : "dev"
 
-  source {
+  # Migrated from block to attribute mapping
+  source = {
     type = "github"
-    config {
+    config = {
       owner               = split("/", var.github_repo)[0]
       repo_name           = split("/", var.github_repo)[1]
       production_branch   = var.environment == "prod" ? "master" : "dev"
@@ -59,21 +59,29 @@ resource "cloudflare_pages_project" "nanni_landing" {
     }
   }
 
-  build_config {
+  # Migrated from block to attribute mapping
+  build_config = {
     build_command   = ""
     destination_dir = ""
     root_dir        = ""
   }
 
-  deployment_configs {
-    preview {
-      environment_variables = {
-        ENVIRONMENT = var.environment
+  # Migrated from block to attribute mapping
+  deployment_configs = {
+    preview = {
+      env_vars = {
+        ENVIRONMENT = {
+          type  = "plain_text"
+          value = var.environment
+        }
       }
     }
-    production {
-      environment_variables = {
-        ENVIRONMENT = var.environment
+    production = {
+      env_vars = {
+        ENVIRONMENT = {
+          type  = "plain_text"
+          value = var.environment
+        }
       }
     }
   }
