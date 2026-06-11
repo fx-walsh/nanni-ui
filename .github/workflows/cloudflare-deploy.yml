@@ -16,6 +16,7 @@ jobs:
       TF_VAR_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      AWS_ENDPOINT_URL_S3: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
 
     steps:
       - name: Checkout Code
@@ -38,8 +39,7 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terraform init \
-            -backend-config="endpoints.s3=https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          terraform init
         working-directory: ./terraform
 
       # 2. Select or create an isolated environment workspace state
