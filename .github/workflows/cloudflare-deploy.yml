@@ -14,9 +14,6 @@ jobs:
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       TF_VAR_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-      AWS_ENDPOINT_URL_S3: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
 
     steps:
       - name: Checkout Code
@@ -37,31 +34,39 @@ jobs:
         with:
           terraform_version: "1.8.0"
 
+      # 2. Hard-inject credentials cleanly during init to bypass setup-terraform limits
       - name: Terraform Init
         run: |
-          echo $AWS_ENDPOINT_URL_S3
-          terraform init
+          terraform init \
+            -backend-config="access_key=${{ secrets.R2_ACCESS_KEY_ID }}" \
+            -backend-config="secret_key=${{ secrets.R2_SECRET_ACCESS_KEY }}" \
+            -backend-config="endpoints={ s3 = \"https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com\" }"
         working-directory: ./terraform
 
-      # 2. Select or create an isolated environment workspace state
+      # 3. Select or create an isolated environment workspace state
       - name: Select Terraform Workspace
         run: |
           terraform workspace select ${{ env.ENV_NAME }} || terraform workspace new ${{ env.ENV_NAME }}
         working-directory: ./terraform
 
-      # 3. Apply the infrastructure changes targeting the current environment context
+      # 4. Inject runtime credentials cleanly for state adjustments during apply
       - name: Terraform Apply
         run: |
-          terraform apply -auto-approve -var="environment=${{ env.ENV_NAME }}"
+          terraform apply -auto-approve \
+            -var="environment=${{ env.ENV_NAME }}" \
+            -var="account_id=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
         working-directory: ./terraform
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_ENDPOINT_URL_S3: https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
 
-      # 4. Push the physical index.html static assets directly to the target project space
+      # 5. Push the physical index.html static assets directly to the target project space
       - name: Publish Pages Web Core
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # Dynamically targets 'nanni-landing-page-dev' or 'nanni-landing-page-prod'
           projectName: 'nanni-landing-page-${{ env.ENV_NAME }}'
           directory: '.'
           branch: ${{ github.ref_name }}
