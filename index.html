@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,7 +45,8 @@
             width: 180px;
             height: 180px;
             object-fit: contain;
-            border-radius: 50%; /* Keeps a clean circular boundary if your image background matches */
+            border-radius: 50%;
+            /* Keeps a clean circular boundary if your image background matches */
         }
 
         h1 {
@@ -122,8 +124,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .modal h2 {
@@ -165,16 +174,19 @@
         .modal::-webkit-scrollbar {
             width: 8px;
         }
+
         .modal::-webkit-scrollbar-track {
             background: #F5F3FC;
             border-radius: 10px;
         }
+
         .modal::-webkit-scrollbar-thumb {
             background: #B8A9F3;
             border-radius: 10px;
         }
     </style>
 </head>
+
 <body>
 
     <div class="main-content">
@@ -195,11 +207,17 @@
         <div class="modal" onclick="event.stopPropagation()">
             <h2>Privacy Policy</h2>
             <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sque id erat vel mi finibus rhoncus. Cras a ante ex. Vivamus varius sollicitudin elementum. Etiam efficitur urna eu dolor elementum, ac lacinia ligula accumsan.</p>
-                <p>Nullam in venenatis tellus, in varius purus. Phasellus tincidunt mi id ante tempor, at laoreet odio aliquam. Nam nec diam egestas, viverra nulla vitae, facilisis neque. Suspendisse potenti. Vivamus elementum massa ac dolor consectetur, ut imperdiet massa consectetur.</p>
-                <p>Aliquam id tellus ante. Nunc sit amet lectus more imperdiet, viverra neque non, gravida quam. Sed ac quam nec lacus convallis tempor. Proin vulputate volutpat nisl sit amet lobortis.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sque id erat vel mi finibus rhoncus. Cras a
+                    ante ex. Vivamus varius sollicitudin elementum. Etiam efficitur urna eu dolor elementum, ac lacinia
+                    ligula accumsan.</p>
+                <p>Nullam in venenatis tellus, in varius purus. Phasellus tincidunt mi id ante tempor, at laoreet odio
+                    aliquam. Nam nec diam egestas, viverra nulla vitae, facilisis neque. Suspendisse potenti. Vivamus
+                    elementum massa ac dolor consectetur, ut imperdiet massa consectetur.</p>
+                <p>Aliquam id tellus ante. Nunc sit amet lectus more imperdiet, viverra neque non, gravida quam. Sed ac
+                    quam nec lacus convallis tempor. Proin vulputate volutpat nisl sit amet lobortis.</p>
             </div>
-            <button class="close-btn" onclick="document.getElementById('privacy-modal').style.display='none'">Close</button>
+            <button class="close-btn"
+                onclick="document.getElementById('privacy-modal').style.display='none'">Close</button>
         </div>
     </div>
 
@@ -207,11 +225,17 @@
         <div class="modal" onclick="event.stopPropagation()">
             <h2>Terms of Service</h2>
             <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis tellus, in varius purus. Phasellus tincidunt mi id ante tempor, at laoreet odio aliquam. Nam nec diam egestas, viverra nulla vitae, facilisis neque. Suspendisse potenti.</p>
-                <p>Vivamus elementum massa ac dolor consectetur, ut imperdiet massa consectetur. Aliquam id tellus ante. Nunc sit amet lectus more imperdiet, viverra neque non, gravida quam. Sed ac quam nec lacus convallis tempor.</p>
-                <p>Morbi hendrerit, urna non eleifend vestibulum, arcu lectus congue feugiat purus, ac porttitor elit dolor ac diam. In finibus pellentesque nisl id aliquet.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis tellus, in varius purus.
+                    Phasellus tincidunt mi id ante tempor, at laoreet odio aliquam. Nam nec diam egestas, viverra nulla
+                    vitae, facilisis neque. Suspendisse potenti.</p>
+                <p>Vivamus elementum massa ac dolor consectetur, ut imperdiet massa consectetur. Aliquam id tellus ante.
+                    Nunc sit amet lectus more imperdiet, viverra neque non, gravida quam. Sed ac quam nec lacus
+                    convallis tempor.</p>
+                <p>Morbi hendrerit, urna non eleifend vestibulum, arcu lectus congue feugiat purus, ac porttitor elit
+                    dolor ac diam. In finibus pellentesque nisl id aliquet.</p>
             </div>
-            <button class="close-btn" onclick="document.getElementById('terms-modal').style.display='none'">Close</button>
+            <button class="close-btn"
+                onclick="document.getElementById('terms-modal').style.display='none'">Close</button>
         </div>
     </div>
 
@@ -219,10 +243,11 @@
         function openModal(type) {
             document.getElementById(type + '-modal').style.display = 'flex';
         }
-        
+
         function closeModal(event, modalId) {
             document.getElementById(modalId).style.display = 'none';
         }
     </script>
 </body>
+
 </html>
