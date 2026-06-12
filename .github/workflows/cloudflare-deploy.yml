@@ -1,0 +1,71 @@
+name: Dynamic Infrastructure & App Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - '*' # Runs on all feature/dev branch pushes
+
+jobs:
+  deploy:
+    name: Provision and Deploy
+    runs-on: ubuntu-latest
+
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 1. Dynamically set the environment variable string based on the branch
+      - name: Set Environment Context
+        id: set-env
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "ENV_NAME=prod" >> $GITHUB_ENV
+          else
+            echo "ENV_NAME=dev" >> $GITHUB_ENV
+          fi
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.8.0"
+
+      # 2. Hard-inject credentials cleanly during init to bypass setup-terraform limits
+      - name: Terraform Init
+        run: |
+          terraform init \
+            -backend-config="access_key=${{ secrets.R2_ACCESS_KEY }}" \
+            -backend-config="secret_key=${{ secrets.R2_SECRET_ACCESS_KEY }}"
+        working-directory: ./terraform
+
+      # 3. Select or create an isolated environment workspace state
+      - name: Select Terraform Workspace
+        run: |
+          terraform workspace select ${{ env.ENV_NAME }} || terraform workspace new ${{ env.ENV_NAME }}
+        working-directory: ./terraform
+
+      # 4. Inject runtime credentials cleanly for state adjustments during apply
+      - name: Terraform Apply
+        run: |
+          terraform apply -auto-approve \
+            -var="environment=${{ env.ENV_NAME }}" \
+            -var="account_id=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
+        working-directory: ./terraform
+
+      # 5. Push the physical index.html static assets directly to the target project space
+      - name: Publish Pages Web Core
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: 'nanni-ui-${{ env.ENV_NAME }}'
+          directory: '.'
+          branch: ${{ github.ref_name }}
+          # Forces the action into Pages deployment mode
+          command: pages deploy public --project-name=nanni-ui-${{ env.ENV_NAME }}

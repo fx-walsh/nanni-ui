@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nanni - Your digital assistant for childcare</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #F5F3FC;
+            color: #5E4E8C;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .logo-container {
+            margin-bottom: 24px;
+        }
+
+        /* Styles the linked logo image for a clean, responsive layout */
+        .logo-img {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #5E4E8C;
+            margin-top: 10px;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: #5E4E8C;
+            opacity: 0.9;
+            font-weight: 400;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding-top: 40px;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: #5E4E8C;
+            text-decoration: none;
+            margin: 0 12px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        footer a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        footer span {
+            color: #B8A9F3;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="main-content">
+        <div class="logo-container">
+            <img class="logo-img" src="img/nanni-logo-full.png" alt="Nanni Logo">
+        </div>
+        <p class="tagline">Your digital assistant for childcare</p>
+    </div>
+
+    <footer>
+        <a href="./privacy.html">Privacy Policy</a>
+        <span>|</span>
+        <a href="./terms.html">Terms of Service</a>
+    </footer>
+
+</body>
+</html>
