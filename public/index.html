@@ -46,7 +46,6 @@
             height: 180px;
             object-fit: contain;
             border-radius: 50%;
-            /* Keeps a clean circular boundary if your image background matches */
         }
 
         h1 {
@@ -92,98 +91,6 @@
         footer span {
             color: #B8A9F3;
         }
-
-        /* Modal Overlay */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(94, 78, 140, 0.4);
-            backdrop-filter: blur(4px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        /* Modal Box */
-        .modal {
-            background-color: #FFFFFF;
-            padding: 32px;
-            border-radius: 24px;
-            max-width: 550px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(94, 78, 140, 0.1);
-            position: relative;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal h2 {
-            font-size: 1.75rem;
-            margin-bottom: 16px;
-            color: #5E4E8C;
-        }
-
-        .modal-body {
-            color: #6C5E93;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        .modal-body p {
-            margin-bottom: 16px;
-        }
-
-        .close-btn {
-            display: inline-block;
-            margin-top: 20px;
-            background-color: #5E4E8C;
-            color: #FFFFFF;
-            padding: 10px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            float: right;
-        }
-
-        .close-btn:hover {
-            background-color: #4A3C73;
-        }
-
-        .modal::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal::-webkit-scrollbar-track {
-            background: #F5F3FC;
-            border-radius: 10px;
-        }
-
-        .modal::-webkit-scrollbar-thumb {
-            background: #B8A9F3;
-            border-radius: 10px;
-        }
     </style>
 </head>
 
@@ -193,61 +100,14 @@
         <div class="logo-container">
             <img class="logo-img" src="img/nanni-logo-full.png" alt="Nanni Logo">
         </div>
-        <h1>Nanni</h1>
         <p class="tagline">Your digital assistant for childcare</p>
     </div>
 
     <footer>
-        <a onclick="openModal('privacy')">Privacy Policy</a>
+        <a href="./privacy.html">Privacy Policy</a>
         <span>|</span>
-        <a onclick="openModal('terms')">Terms of Service</a>
+        <a href="./terms.html">Terms of Service</a>
     </footer>
 
-    <div id="privacy-modal" class="modal-overlay" onclick="closeModal(event, 'privacy-modal')">
-        <div class="modal" onclick="event.stopPropagation()">
-            <h2>Privacy Policy</h2>
-            <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sque id erat vel mi finibus rhoncus. Cras a
-                    ante ex. Vivamus varius sollicitudin elementum. Etiam efficitur urna eu dolor elementum, ac lacinia
-                    ligula accumsan.</p>
-                <p>Nullam in venenatis tellus, in varius purus. Phasellus tincidunt mi id ante tempor, at laoreet odio
-                    aliquam. Nam nec diam egestas, viverra nulla vitae, facilisis neque. Suspendisse potenti. Vivamus
-                    elementum massa ac dolor consectetur, ut imperdiet massa consectetur.</p>
-                <p>Aliquam id tellus ante. Nunc sit amet lectus more imperdiet, viverra neque non, gravida quam. Sed ac
-                    quam nec lacus convallis tempor. Proin vulputate volutpat nisl sit amet lobortis.</p>
-            </div>
-            <button class="close-btn"
-                onclick="document.getElementById('privacy-modal').style.display='none'">Close</button>
-        </div>
-    </div>
-
-    <div id="terms-modal" class="modal-overlay" onclick="closeModal(event, 'terms-modal')">
-        <div class="modal" onclick="event.stopPropagation()">
-            <h2>Terms of Service</h2>
-            <div class="modal-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in venenatis tellus, in varius purus.
-                    Phasellus tincidunt mi id ante tempor, at laoreet odio aliquam. Nam nec diam egestas, viverra nulla
-                    vitae, facilisis neque. Suspendisse potenti.</p>
-                <p>Vivamus elementum massa ac dolor consectetur, ut imperdiet massa consectetur. Aliquam id tellus ante.
-                    Nunc sit amet lectus more imperdiet, viverra neque non, gravida quam. Sed ac quam nec lacus
-                    convallis tempor.</p>
-                <p>Morbi hendrerit, urna non eleifend vestibulum, arcu lectus congue feugiat purus, ac porttitor elit
-                    dolor ac diam. In finibus pellentesque nisl id aliquet.</p>
-            </div>
-            <button class="close-btn"
-                onclick="document.getElementById('terms-modal').style.display='none'">Close</button>
-        </div>
-    </div>
-
-    <script>
-        function openModal(type) {
-            document.getElementById(type + '-modal').style.display = 'flex';
-        }
-
-        function closeModal(event, modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-    </script>
 </body>
-
 </html>
