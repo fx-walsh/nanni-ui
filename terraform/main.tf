@@ -45,7 +45,7 @@ variable "github_repo" {
 resource "cloudflare_pages_project" "nanni_ui" {
   account_id        = var.account_id
   name              = "nanni-ui-${var.environment}"
-  production_branch = var.environment == "prod" ? "master" : "dev"
+  production_branch = var.environment == "prod" ? "main" : "dev"
 
   # Migrated from block to attribute mapping
   source = {
@@ -53,7 +53,7 @@ resource "cloudflare_pages_project" "nanni_ui" {
     config = {
       owner               = split("/", var.github_repo)[0]
       repo_name           = split("/", var.github_repo)[1]
-      production_branch   = var.environment == "prod" ? "master" : "dev"
+      production_branch   = var.environment == "prod" ? "main" : "dev"
       deployments_enabled = true
       pr_comments_enabled = true
     }
