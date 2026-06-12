@@ -68,4 +68,4 @@ jobs:
           directory: '.'
           branch: ${{ github.ref_name }}
           # Forces the action into Pages deployment mode
-          command: pages deploy . --project-name=nanni-ui-${{ env.ENV_NAME }}
+          command: pages deploy public --project-name=nanni-ui-${{ env.ENV_NAME }}
