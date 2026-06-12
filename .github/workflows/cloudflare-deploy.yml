@@ -64,6 +64,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'nanni-landing-page-${{ env.ENV_NAME }}'
+          projectName: 'nanni-ui-${{ env.ENV_NAME }}'
           directory: '.'
           branch: ${{ github.ref_name }}
+          # Forces the action into Pages deployment mode
+          # command: pages deploy . --project-name=nanni-ui-${{ env.ENV_NAME }}
